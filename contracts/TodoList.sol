@@ -25,11 +25,13 @@ contract TodoList {
     }
 
     function markTaskAsComplete(uint256 _id) public {
-            require(_id > 0, "Invalid task ID");
+            require(tasks[_id].creator == msg.sender, "Only the creator can mark this task as complete");
+             tasks[_id].completed = true;
     }
 
     function deleteTask(uint256 _id) public {
-            require(_id > 0, "Invalid task ID");
+            require(tasks[_id].creator == msg.sender, "Only the creator can delete this task");
+            delete tasks[_id];  
     }
 
     function viewTask(uint256 _id) public view returns(string memory description, bool completed) {
