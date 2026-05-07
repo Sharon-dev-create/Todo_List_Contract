@@ -15,6 +15,10 @@ contract TodoList {
         Completed
     }
 
+    event TaskCreated(uint256 indexed id, address indexed creator, string description);
+    event TaskCompleted(uint256 indexed id);
+    event TaskDeleted(uint256 indexed id);
+
     mapping(uint256 => Task) private tasks;
     uint256 private taskCount;
     
@@ -27,26 +31,35 @@ contract TodoList {
                 status: Status.InProgress
          });
 
+         emit TaskCreated(taskCount, msg.sender, _description);
+
          taskCount++;
+
     }
 
     function markTaskAsComplete(uint256 _id) public {
-            require(tasks[_id].creator == msg.sender, "Only the creator can mark this task as complete");
             require(tasks[_id].status != Status.Empty, "Task does not exist");
-             tasks[_id].status = Status.Completed;
+            require(tasks[_id].creator == msg.sender, "Only the creator can mark this task as complete");
+
+            tasks[_id].status = Status.Completed;
+
+            emit TaskCompleted(_id);
     }
 
     function deleteTask(uint256 _id) public {
-            require(tasks[_id].creator == msg.sender, "Only the creator can delete this task");
             require(tasks[_id].status != Status.Empty, "Task does not exist");
-            delete tasks[_id];  
+            require(tasks[_id].creator == msg.sender, "Only the creator can delete this task");
+
+            delete tasks[_id];
+
+            emit TaskDeleted(_id);
     }
 
-    function viewTask(uint256 _id) public view returns(string memory description, Status status) {
-            require (tasks[_id].creator != Status.Empty, "Task does not exist");
+    function viewTask(uint256 _id) public view returns(address creator, string memory description, Status status) {
+            require(tasks[_id].status != Status.Empty, "Task does not exist");
 
             Task storage task = tasks[_id];
 
-            return (task.description, task.status);
+            return (task.creator, task.description, task.status);
     }
 }
