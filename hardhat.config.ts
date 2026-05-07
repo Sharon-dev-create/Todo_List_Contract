@@ -4,4 +4,10 @@ export default defineConfig({
   solidity: {
     version: "0.8.28",
   },
+  paths: {
+    sources: "./contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
+  },
 });

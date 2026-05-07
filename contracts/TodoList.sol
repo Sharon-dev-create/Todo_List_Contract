@@ -4,14 +4,24 @@ pragma solidity ^0.8.0;
 
 contract TodoList {
     struct Task {
-        uint id;
+        address creator;
         string description;
         bool completed;
     }
 
+    mapping(uint256 => Task) private tasks;
+    uint256 private taskCount;
+    
 
     function createTask(string memory _description) public {
          require(bytes(_description).length > 0, "Description cannot be empty");
+         tasks[taskCount] = Task({
+                creator: msg.sender,
+                description: _description,
+                completed: false
+         });
+
+         taskCount++;
     }
 
     function markTaskAsComplete(uint256 _id) public {
@@ -23,7 +33,6 @@ contract TodoList {
     }
 
     function viewTask(uint256 _id) public view returns(string memory description, bool completed) {
-            require(_id > 0, "Invalid task ID");
             return ("Sample Task", false);
     }
 }
