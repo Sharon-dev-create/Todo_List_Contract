@@ -6,7 +6,13 @@ contract TodoList {
     struct Task {
         address creator;
         string description;
-        bool completed;
+        Status status;
+    }
+
+    enum Status {
+        Empty,
+        InProgress,
+        Completed
     }
 
     mapping(uint256 => Task) private tasks;
@@ -18,7 +24,7 @@ contract TodoList {
          tasks[taskCount] = Task({
                 creator: msg.sender,
                 description: _description,
-                completed: false
+                status: Status.Empty
          });
 
          taskCount++;
@@ -26,7 +32,7 @@ contract TodoList {
 
     function markTaskAsComplete(uint256 _id) public {
             require(tasks[_id].creator == msg.sender, "Only the creator can mark this task as complete");
-             tasks[_id].completed = true;
+             tasks[_id].status = Status.Completed;
     }
 
     function deleteTask(uint256 _id) public {
@@ -34,7 +40,7 @@ contract TodoList {
             delete tasks[_id];  
     }
 
-    function viewTask(uint256 _id) public view returns(string memory description, bool completed) {
-            return ("Sample Task", false);
+    function viewTask(uint256 _id) public view returns(string memory description, Status status) {
+            return ("Sample Task", Status.Empty);
     }
 }
