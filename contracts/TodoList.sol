@@ -24,7 +24,7 @@ contract TodoList {
          tasks[taskCount] = Task({
                 creator: msg.sender,
                 description: _description,
-                status: Status.Empty
+                status: Status.InProgress
          });
 
          taskCount++;
@@ -32,15 +32,21 @@ contract TodoList {
 
     function markTaskAsComplete(uint256 _id) public {
             require(tasks[_id].creator == msg.sender, "Only the creator can mark this task as complete");
+            require(tasks[_id].status != Status.Empty, "Task does not exist");
              tasks[_id].status = Status.Completed;
     }
 
     function deleteTask(uint256 _id) public {
             require(tasks[_id].creator == msg.sender, "Only the creator can delete this task");
+            require(tasks[_id].status != Status.Empty, "Task does not exist");
             delete tasks[_id];  
     }
 
     function viewTask(uint256 _id) public view returns(string memory description, Status status) {
-            return ("Sample Task", Status.Empty);
+            require (tasks[_id].creator != Status.Empty, "Task does not exist");
+
+            Task storage task = tasks[_id];
+
+            return (task.description, task.status);
     }
 }
