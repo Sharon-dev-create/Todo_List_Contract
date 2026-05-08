@@ -1,7 +1,29 @@
-# Sample Hardhat 3 Beta Project (minimal)
+# TodoList contract (Hardhat 3)
 
-This project has a minimal setup of Hardhat 3 Beta, without any plugins.
+## Local deploy
 
-## What's included?
+Requires Node.js `>= 22.13.0`.
 
-The project includes native support for TypeScript, Hardhat scripts, tasks, and support for Solidity compilation and tests.
+```sh
+npm install
+npm run build
+npm run deploy:hardhat
+```
+
+To deploy to a running local node:
+
+```sh
+npm run node
+# in another terminal
+npm run deploy:localhost
+```
+
+## Sepolia deploy
+
+Set `SEPOLIA_RPC_URL` and `PRIVATE_KEY` (see `.env.example`), then:
+
+```sh
+npm install
+npm run build
+npm run deploy:sepolia
+```

@@ -1,12 +1,8 @@
-const { ethers } = require("hardhat");
+import { network } from "hardhat";
 
-async function main() {
-  const Todo = await ethers.getContractFactory("Todo");
-  const todo = await Todo.deploy();
+const { ethers } = await network.create();
 
-  await todo.waitForDeployment();
+const todoList = await ethers.deployContract("TodoList");
+await todoList.waitForDeployment();
 
-  console.log("Deployed to:", await todo.getAddress());
-}
-
-main();
+console.log("TodoList deployed to:", await todoList.getAddress());
