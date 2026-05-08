@@ -19,8 +19,9 @@
     "node": ">=22.13.0"
   },
   "devDependencies": {
-    "@types/node": "^22.19.17",
     "@nomicfoundation/hardhat-ethers": "^4.0.10",
+    "@nomicfoundation/hardhat-verify": "^3.0.17",
+    "@types/node": "^22.19.17",
     "ethers": "^6.14.0",
     "hardhat": "^3.4.4",
     "typescript": "~5.8.0"

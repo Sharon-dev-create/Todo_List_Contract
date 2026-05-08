@@ -58,7 +58,7 @@ contract TodoList {
     function viewTask(uint256 _id) public view returns(address creator, string memory description, Status status) {
             require(tasks[_id].status != Status.Empty, "Task does not exist");
 
-            Task storage task = tasks[_id];
+            Task memory task = tasks[_id];
 
             return (task.creator, task.description, task.status);
     }
