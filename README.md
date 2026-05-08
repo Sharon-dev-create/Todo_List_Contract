@@ -27,3 +27,5 @@ npm install
 npm run build
 npm run deploy:sepolia
 ```
+
+Note: this repo loads `.env` automatically from `hardhat.config.ts`.

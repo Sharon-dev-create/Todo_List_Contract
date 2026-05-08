@@ -1,3 +1,4 @@
+import "dotenv/config";
 import hardhatEthersPlugin from "@nomicfoundation/hardhat-ethers";
 import { configVariable, defineConfig } from "hardhat/config";
 
